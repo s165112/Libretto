@@ -2,6 +2,8 @@ package it.polito.tdp.libretto.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.polito.tdp.libretto.db.EsameDAO;
 /**
  * Classe che gestisce 
  * @author francescaveltri
@@ -26,12 +28,10 @@ public class LibrettoModel {
 	 * @return true se l'ha inserito, false se esisteva già e quindi non possibile aggiungerlo
 	 */
 	public boolean addEsame(Esame e){
-		if(!esami.contains(e)){
-			esami.add(e);
-			return true;
-		}else{
-			return false;
-		}
+		
+		EsameDAO dao = new EsameDAO();
+		return dao.create(e);
+	
 	}
 	/**
 	 * Ricerca se esiste un esame con un codice specificato
@@ -40,13 +40,10 @@ public class LibrettoModel {
 	 * @return l'esame trovato, oppure null se non trovato
 	 */
 	public Esame trovaEsame(String codice){
-		int pos = esami.indexOf(new Esame(codice, "null","null"));
-		if(pos==-1){
-			return null;
-		}else{
-			return esami.get(pos);
-		}
-		
+
+		EsameDAO dao = new EsameDAO();
+		Esame e = dao.find(codice);
+		return e;
 	}
 	
 	
